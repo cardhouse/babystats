@@ -1,0 +1,29 @@
+models:
+  Baby:
+    name: string:50
+    sex: enum:m,f
+    birth_date: datetime
+    user_id: id foreign
+    relationships:
+      hasMany: Diaper,Feeding,Sleep,User
+
+  Diaper:
+    type: enum:wet,dirty,full
+    date_time: datetime
+    relationships:
+      belongsTo: Baby
+
+  Feeding:
+    type: enum:breast,bottle
+    measurement: enum:ml,oz,min
+    size: int
+    side: enum:left,right,both nullable
+    date_time: datetime
+    relationships:
+      belongsTo: Baby
+
+  Sleep:
+    minutes: int
+    date_time: datetime
+    relationships:
+      belongsTo: Baby

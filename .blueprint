@@ -1,0 +1,19 @@
+created:
+    - database/factories/BabyFactory.php
+    - database/factories/DiaperFactory.php
+    - database/factories/FeedingFactory.php
+    - database/factories/SleepFactory.php
+    - database/migrations/2025_03_15_021735_create_babies_table.php
+    - database/migrations/2025_03_15_021736_create_diapers_table.php
+    - database/migrations/2025_03_15_021737_create_feedings_table.php
+    - database/migrations/2025_03_15_021738_create_sleeps_table.php
+    - app/Models/Baby.php
+    - app/Models/Diaper.php
+    - app/Models/Feeding.php
+    - app/Models/Sleep.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
+    Baby: { name: 'string:50', sex: 'enum:m,f', birth_date: datetime, user_id: 'id foreign', relationships: { hasMany: 'Diaper,Feeding,Sleep,User' } }
+    Diaper: { type: 'enum:wet,dirty,full', date_time: datetime, relationships: { belongsTo: Baby } }
+    Feeding: { type: 'enum:breast,bottle', measurement: 'enum:ml,oz,min', size: int, side: 'enum:left,right,both nullable', date_time: datetime, relationships: { belongsTo: Baby } }
+    Sleep: { minutes: int, date_time: datetime, relationships: { belongsTo: Baby } }
