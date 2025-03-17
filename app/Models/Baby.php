@@ -18,7 +18,6 @@ class Baby extends Model
      */
     protected $fillable = [
         'name',
-        'sex',
         'birth_date',
         'user_id',
     ];
@@ -49,7 +48,7 @@ class Baby extends Model
         return $this->hasMany(Sleep::class);
     }
 
-    public function users(): HasMany
+    public function caregivers(): HasMany
     {
         return $this->hasMany(User::class);
     }

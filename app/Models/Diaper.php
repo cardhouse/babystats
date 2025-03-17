@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,5 +36,10 @@ class Diaper extends Model
     public function baby(): BelongsTo
     {
         return $this->belongsTo(Baby::class);
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('date_time', Carbon::today());
     }
 }

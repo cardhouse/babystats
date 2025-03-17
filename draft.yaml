@@ -5,7 +5,7 @@ models:
     birth_date: datetime
     user_id: id foreign
     relationships:
-      hasMany: Diaper,Feeding,Sleep,User
+      hasMany: Diaper,Feeding,Sleep,User:caregiver
 
   Diaper:
     type: enum:wet,dirty,full

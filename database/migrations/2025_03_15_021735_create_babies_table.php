@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('babies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->enum('sex', ["m","f"]);
             $table->dateTime('birth_date');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
