@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class Diaper extends Model
 {
@@ -40,6 +40,9 @@ class Diaper extends Model
 
     public function scopeToday($query)
     {
-        return $query->whereDate('date_time', Carbon::today());
+        $startOfDay = Carbon::now()->startOfDay();
+        $endOfDay = Carbon::now()->endOfDay();
+
+        return $query->whereBetween('date_time', [$startOfDay, $endOfDay]);
     }
 }
