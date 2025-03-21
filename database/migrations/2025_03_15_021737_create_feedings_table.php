@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('feedings', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ["breast","bottle"]);
-            $table->enum('measurement', ["ml","oz","min"]);
-            $table->string('size');
+            $table->enum('unit', ["ml","oz","min"])->default('min');
+            $table->integer('amount');
             $table->enum('side', ["left","right","both"])->nullable();
             $table->dateTime('date_time');
             $table->foreignId('baby_id');

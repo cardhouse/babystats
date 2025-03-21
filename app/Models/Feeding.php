@@ -17,8 +17,8 @@ class Feeding extends Model
      */
     protected $fillable = [
         'type',
-        'measurement',
-        'size',
+        'amount',
+        'unit',
         'side',
         'date_time',
         'baby_id',

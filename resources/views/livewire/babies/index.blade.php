@@ -24,7 +24,7 @@ new class extends Component {
         <div class="relative flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-md border border-pink-200">
             <h3 class="text-pink-600 font-semibold text-xl">{{ $baby->name }}</h3>
             <p class="text-pink-400">Age: {{ $baby->age }} months</p>
-            <a href="/baby/{{ $baby->id }}" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">View Stats</a>
+            <a href="/babies/{{ $baby->id }}" class="mt-4 bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">View Stats</a>
         </div>
         @endforeach
     </div>
