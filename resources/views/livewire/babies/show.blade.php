@@ -59,9 +59,33 @@ new class extends Component {
             </div>
         </flux:tab.panel>
     </flux:tab.group>
-    
-    <!-- Back to Babies Button -->
-    <div class="flex justify-center mt-6">
-        <a href="/babies" class="bg-gray-500 text-white py-3 px-6 rounded-lg text-lg shadow-md hover:bg-gray-600">Back to My Babies</a>
-    </div>
+
+    <flux:table>
+        <flux:table.columns>
+            <flux:table.column>Type</flux:table.column>
+            <flux:table.column>Amount</flux:table.column>
+            <flux:table.column>Unit</flux:table.column>
+            <flux:table.column>DateTime</flux:table.column>
+        </flux:table.columns>
+
+        <flux:table.rows>
+            @foreach ($this->baby->history as $item)
+                <flux:table.row :key="$item->id">
+                    <flux:table.cell class="flex items-center gap-3">
+                        {{ $item->type }}
+                    </flux:table.cell>
+
+                    <flux:table.cell class="whitespace-nowrap">{{ $item->amount }}</flux:table.cell>
+
+                    <flux:table.cell>
+                        {{ $item->unit }}
+                    </flux:table.cell>
+
+                    <flux:table.cell variant="strong">{{ $item->date_time }}</flux:table.cell>
+
+                </flux:table.row>
+            @endforeach
+        </flux:table.rows>
+    </flux:table>
+
 </div>

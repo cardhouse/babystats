@@ -62,8 +62,8 @@ new class extends Component {
                 <flux:input.group class="w-full mt-4">
                     <flux:input wire:model="newFeedingAmount" type="number" placeholder="Amount" />
                     
-                    <flux:select inset="top bottom" wire:model="newFeedingUnit" variant="listbox">
-                        <flux:select.option selected>ml</flux:select.option>
+                    <flux:select placeholder="Measurement" inset="top bottom" wire:model="newFeedingUnit" variant="listbox">
+                        <flux:select.option>ml</flux:select.option>
                         <flux:select.option>oz</flux:select.option>
                     </flux:select>
                 </flux:input.group>

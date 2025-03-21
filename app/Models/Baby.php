@@ -57,4 +57,21 @@ class Baby extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getHistoryAttribute()
+    {
+        return $this->feedings->map(function ($item) {
+                $item->type = 'feeding';
+                return $item;
+            })
+            ->merge($this->diapers->map(function ($item) {
+                $item->type = 'diaper';
+                return $item;
+            }))
+            ->merge($this->sleeps->map(function ($item) {
+                $item->type = 'sleep';
+                return $item;
+            }))
+            ->sortByDesc('date_time');
+    }
 }
