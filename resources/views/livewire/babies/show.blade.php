@@ -60,6 +60,26 @@ new class extends Component {
         </flux:tab.panel>
     </flux:tab.group>
 
+    <div class="mx-auto max-w-lg max-sm:px-2">
+        {{-- Loop: questions... --}}
+
+        <div class="p-3 sm:p-4 rounded-lg">
+            <div class="flex flex-row sm:items-center gap-2">
+                <flux:avatar src="https://randomuser.me/api/portraits/men/1.jpg" size="xs" class="shrink-0" />
+
+                <div class="flex flex-col gap-0.5 sm:gap-2 sm:flex-row sm:items-center">
+                    <div class="flex items-center gap-2">
+                        <flux:heading>John Doe</flux:heading>
+
+                        <flux:badge color="lime" size="sm" icon="check-badge" inset="top bottom">Moderator</flux:badge>
+                    </div>
+
+                    <flux:text class="text-sm">2 days ago</flux:text>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <flux:table>
         <flux:table.columns>
             <flux:table.column>Type</flux:table.column>

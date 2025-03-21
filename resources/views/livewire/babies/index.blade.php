@@ -11,6 +11,11 @@ new class extends Component {
     {
         $user = Auth::user();
         $this->babies = $user->babies;
+
+        // If the user only has one baby, redirect to the baby's page
+        if ($this->babies->count() === 1) {
+            return $this->redirectRoute('babies.show', ['baby' => $this->babies->first()]);
+        }
     }
 }; ?>
 
