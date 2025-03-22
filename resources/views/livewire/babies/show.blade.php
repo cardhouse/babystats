@@ -72,7 +72,7 @@ new class extends Component {
                                 {{ $item->unit }}
                             </flux:table.cell>
         
-                            <flux:table.cell variant="strong">{{ $item->date_time->timezone('America/New_York')->toDayDateTimeString() }}</flux:table.cell>
+                            <flux:table.cell variant="strong">{{ $item->date_time->timezone('America/New_York')->format("D g:i a") }}</flux:table.cell>
         
                         </flux:table.row>
                     @endforeach

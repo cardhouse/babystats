@@ -6,7 +6,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public Baby $baby;
 
-    public ?string $newDiaperCategory;
+    public ?string $newDiaperCategory = null;
 
     public function mount(Baby $baby)
     {
@@ -24,6 +24,14 @@ new class extends Component {
             'date_time' => now(),
         ]);
 
+        $this->newDiaperCategory = null;
+
+        Flux::toast(
+            heading: 'Diaper Logged!',
+            text: 'How many more could there possibly be?',
+            variant: 'success'
+        );
+
         $this->dispatch('updated');
     }
 
@@ -34,7 +42,7 @@ new class extends Component {
     <flux:subheading>Everybody poops.</flux:subheading>
 
     <form wire:submit.prevent="addDiaper">
-        <flux:select wire:model="newDiaperCategory" placeholder="How bad was it?" class="w-full mt-2">
+        <flux:select wire:model="newDiaperCategory" variant="listbox" placeholder="How bad was it?" class="mt-2">
             <flux:select.option value="wet">Wet</flux:select.option>
             <flux:select.option value="dirty">Dirty</flux:select.option>
             <flux:select.option value="full">Both</flux:select.option>
