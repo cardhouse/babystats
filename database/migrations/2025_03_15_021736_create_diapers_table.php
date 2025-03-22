@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('diapers', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ["wet","dirty","full"]);
+            $table->enum('category', ["wet","dirty","full"]);
             $table->dateTime('date_time');
             $table->foreignId('baby_id');
             $table->timestamps();

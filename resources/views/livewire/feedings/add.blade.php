@@ -6,7 +6,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public Baby $baby;
 
-    public ?string $newFeedingType = null;
+    public ?string $newFeedingCategory = null;
     public ?int $newFeedingAmount = null;
     public ?string $newFeedingUnit = null;
     public ?string $newFeedingSide = null;
@@ -19,21 +19,21 @@ new class extends Component {
     public function addFeeding()
     {
         $this->validate([
-            'newFeedingType' => 'required|in:breast,bottle',
+            'newFeedingCategory' => 'required|in:breast,bottle',
             'newFeedingAmount' => 'required|int|min:1|max:60',
-            'newFeedingUnit' => 'required_if:newFeedingType,bottle',
-            'newFeedingSide' => 'required_if:newFeedingType,breast',
+            'newFeedingUnit' => 'required_if:newFeedingCategory,bottle',
+            'newFeedingSide' => 'required_if:newFeedingCategory,breast',
         ]);
 
         $this->baby->feedings()->create([
-            'type' => $this->newFeedingType,
+            'category' => $this->newFeedingCategory,
             'amount' => $this->newFeedingAmount,
             'unit' => $this->newFeedingUnit ?? 'min',
             'side' => $this->newFeedingSide,
             'date_time' => now(),
         ]);
 
-        $this->newFeedingType = null;
+        $this->newFeedingCategory = null;
         $this->newFeedingAmount = null;
         $this->newFeedingUnit = null;
         $this->newFeedingSide = null;
@@ -46,18 +46,16 @@ new class extends Component {
 
 <flux:card class="bg-white dark:bg-gray-800 shadow-lg rounded-xl flex flex-col justify-between h-full"> 
     <flux:heading size="xl" class="text-blue-500">🍼 Feeding</flux:heading>
-    <flux:subheading>Input feeding info for the little one.</flux:subheading>
+    <flux:subheading>Cheers!</flux:subheading>
 
     <form wire:submit.prevent="addFeeding">
-        <!-- Select the type of feeding -->
-        <flux:label class="mt-4">Feeding Type</flux:label>
-        <flux:select wire:model.live="newFeedingType" variant="listbox" placeholder="Feeding type" class="w-full mt-2">
+        <flux:select wire:model.live="newFeedingCategory" variant="listbox" placeholder="Feeding Category" class="w-full mt-2">
             <flux:select.option value="breast">Breast</flux:select.option>
             <flux:select.option value="bottle">Bottle</flux:select.option>
         </flux:select>
 
         <!-- If the type is a bottle, have inputs for the number and measurement (ml, oz) -->
-        @if ($this->newFeedingType === 'bottle')
+        @if ($this->newFeedingCategory === 'bottle')
             
                 <flux:input.group class="w-full mt-4">
                     <flux:input wire:model="newFeedingAmount" type="number" placeholder="Amount" />
@@ -68,7 +66,7 @@ new class extends Component {
                     </flux:select>
                 </flux:input.group>
             
-        @elseif($this->newFeedingType === 'breast')
+        @elseif($this->newFeedingCategory === 'breast')
             <flux:radio.group wire:model="newFeedingSide" variant="segmented" class="mt-4">
                     <flux:radio value="left" label="Left" />
                     <flux:radio value="right" label="Right" />
