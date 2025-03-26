@@ -26,13 +26,12 @@ new class extends Component {
     }
 }; ?>
 
-<div>
-    <flux:card class="flex flex-col gap-4 max-w-2xl">
-        <flux:heading>Declare the birth of a baby to start your journey.</flux:heading>
-        <flux:input label="Baby's name" type="text" wire:model='newName'></flux:input>
-        <flux:date-picker wire:model='newBirthDate' label="Baby's birth date" />
-        <flux:button wire:click="createBaby" variant="primary" class="w-full">
-            {{ __('Save') }}
-        </flux:button>
-    </flux:card>
-</div>
+<flux:card class="flex flex-col gap-4 max-w-2xl">
+    <flux:heading>Add a child to track their stats.</flux:heading>
+    <flux:input label="Baby's name" type="text" wire:model='newName'></flux:input>
+    <flux:date-picker wire:model='newBirthDate' label="Baby's birth date" />
+    <flux:button wire:click="createBaby" variant="primary" class="w-full">
+        {{ __('Save') }}
+    </flux:button>
+</flux:card>
+
