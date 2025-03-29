@@ -39,6 +39,8 @@ new class extends Component {
         $this->newFeedingSide = null;
         $this->newFeedingDuration = null;
 
+        Flux::modals()->close();
+
         Flux::toast(
             heading: 'Feeding Logged!',
             text: 'Bring on the food coma!',

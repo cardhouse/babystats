@@ -26,15 +26,37 @@ new class extends Component {
             <flux:button icon="plus">Add</flux:button>
         </flux:modal.trigger>
     </flux:header>
-    <flux:card>
-        @php
-            $history = collect($this->baby->getHistoryForDate($this->filterDate));
-            $peeCount = $history->whereIn('category', ['wet', 'full'])->count();
-            $poopCount = $history->whereIn('category', ['dirty', 'full'])->count();
-        @endphp
-        <div>Pee Count: {{ $peeCount }}</div>
-        <div>Poop Count: {{ $poopCount }}</div>
-    </flux:card>
+
+    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+        <div class="w-full md:w-1/2">
+            <flux:card>
+                @php
+                    $history = collect($this->baby->getHistoryForDate($this->filterDate));
+                    $peeCount = $history->whereIn('category', ['wet', 'full'])->count();
+                    $poopCount = $history->whereIn('category', ['dirty', 'full'])->count();
+                @endphp
+                <div>Pee Count: {{ $peeCount }}</div>
+                <div>Poop Count: {{ $poopCount }}</div>
+            </flux:card>
+        </div>
+        <div class="w-full md:w-1/2">
+            <flux:card>
+                @php
+                    $feedings = collect($this->baby->getHistoryForDate($this->filterDate));
+                    // Group bottle feedings by their unit (oz or ml) and sum amounts
+                    $bottleFeedings = $feedings->where('category', 'bottle');
+                    $bottleConsumptions = $bottleFeedings->groupBy('unit')->map(function($group) {
+                        return $group->sum('amount');
+                    })->all();
+                    $breastfeedingTime = $feedings->where('category', 'breast')->sum('amount');
+                @endphp
+                @foreach($bottleConsumptions as $unit => $total)
+                    <div>Total Bottle Consumption ({{ $unit }}): {{ $total }}</div>
+                @endforeach
+                <div>Total Breastfeeding Time: {{ $breastfeedingTime }} minutes</div>
+            </flux:card>
+        </div>
+    </div>
 
     <flux:modal name="edit-profile">
         <flux:tab.group class="max-w-md mx-auto">
