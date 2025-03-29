@@ -17,12 +17,6 @@
                 </flux:navbar.item>
             </flux:navbar>
 
-            <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route('babies.index')" :current="request()->routeIs('babies.*')" wire:navigate>
-                    {{ __('Babies') }}
-                </flux:navbar.item>
-            </flux:navbar>
-
             <flux:spacer />
 
             @stack('header-items')

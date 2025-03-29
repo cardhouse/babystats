@@ -1,4 +1,4 @@
-@props(['baby'])
+@props(['history'])
 
 <flux:table>
     <flux:table.columns>
@@ -9,7 +9,7 @@
     </flux:table.columns>
 
     <flux:table.rows>
-        @foreach ($this->baby->history as $item)
+        @foreach ($history as $item)
             <flux:table.row :key="$item->id.$item->date_time">
                 <flux:table.cell class="flex items-center gap-3">
                     {{ $item->type }}
@@ -20,8 +20,10 @@
                 </flux:table.cell>
                 
                 <flux:table.cell class="whitespace-nowrap">{{ $item->amount ?? $item->category }}</flux:table.cell>
-                <flux:table.cell>{{ $item->unit }}</flux:table.cell>
-                <flux:table.cell variant="strong">{{ $item->date_time->timezone('America/New_York')->format("D g:i a") }}</flux:table.cell>
+                <flux:table.cell>{{ $item->unit }}</flux:table.cell> 
+                <flux:table.cell variant="strong">
+                    {{ \Carbon\Carbon::parse($item->date_time)->timezone('America/New_York')->format("D g:i a") }}
+                </flux:table.cell>
             </flux:table.row>
         @endforeach
     </flux:table.rows>

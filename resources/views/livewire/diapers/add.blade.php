@@ -34,7 +34,7 @@ new class extends Component {
     }
 }; ?>
 
-<flux:card class="bg-white dark:bg-gray-800 shadow-lg rounded-xl flex flex-col justify-between h-full">
+<div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl flex flex-col justify-between h-full">
     <flux:heading size="xl" class="text-yellow-500">💩 Diapers</flux:heading>
     <flux:subheading>Everybody poops.</flux:subheading>
 
@@ -46,4 +46,4 @@ new class extends Component {
         </flux:select>
         <flux:button type="submit" variant="primary" class="mt-4">Log Diaper</flux:button>
     </form>
-</flux:card>
+</div>
