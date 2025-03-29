@@ -64,11 +64,11 @@ class Baby extends Model
                 $item->type = 'feeding';
                 return $item;
             })
-            ->merge($this->diapers->map(function ($item) {
+            ->concat($this->diapers->map(function ($item) {
                 $item->type = 'diaper';
                 return $item;
             }))
-            ->merge($this->sleeps->map(function ($item) {
+            ->concat($this->sleeps->map(function ($item) {
                 $item->type = 'sleep';
                 return $item;
             }))

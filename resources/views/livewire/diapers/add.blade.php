@@ -16,7 +16,7 @@ new class extends Component {
     public function addDiaper()
     {
         $this->validate([
-            'newDiaperCategory' => 'required|in:wet,dirty,full'
+            'newDiaperCategory' => 'required|in:wet,dirty,full',
         ]);
 
         $this->baby->diapers()->create([
@@ -26,15 +26,12 @@ new class extends Component {
 
         $this->newDiaperCategory = null;
 
-        Flux::toast(
-            heading: 'Diaper Logged!',
-            text: 'How many more could there possibly be?',
-            variant: 'success'
-        );
+        Flux::modals()->close();
+
+        Flux::toast(heading: 'Diaper Logged!', text: 'How many more could there possibly be?', variant: 'success');
 
         $this->dispatch('updated');
     }
-
 }; ?>
 
 <flux:card class="bg-white dark:bg-gray-800 shadow-lg rounded-xl flex flex-col justify-between h-full">

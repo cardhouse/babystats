@@ -10,7 +10,7 @@
 
     <flux:table.rows>
         @foreach ($this->baby->history as $item)
-            <flux:table.row :key="$item->id">
+            <flux:table.row :key="$item->id.$item->date_time">
                 <flux:table.cell class="flex items-center gap-3">
                     {{ $item->type }}
                     @if ($item->category === 'breast')

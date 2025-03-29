@@ -29,7 +29,7 @@ new class extends Component {
 <flux:card class="flex flex-col gap-4 max-w-2xl">
     <flux:heading>Add a child to track their stats.</flux:heading>
     <flux:input label="Baby's name" type="text" wire:model='newName'></flux:input>
-    <flux:date-picker wire:model='newBirthDate' label="Baby's birth date" />
+    <flux:date-picker wire:model='newBirthDate' label="Baby's birth date" selectable-header />
     <flux:button wire:click="createBaby" variant="primary" class="w-full">
         {{ __('Save') }}
     </flux:button>
