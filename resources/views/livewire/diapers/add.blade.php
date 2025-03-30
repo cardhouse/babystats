@@ -38,7 +38,7 @@ new class extends Component {
     }
 }; ?>
 
-<flux:container class="flex flex-col md:w-sm justify-center items-center h-full space-y-4 text-center">
+<flux:container class="flex flex-col md:w-sm justify-center items-center h-full min-h-[300px] space-y-4 text-center">
     <flux:heading size="xl" class="text-yellow-500">💩 Diapers</flux:heading>
     <flux:subheading class="text-gray-600 dark:text-gray-300">Everybody poops.</flux:subheading>
 
