@@ -15,10 +15,10 @@ return new class extends Migration
 
         Schema::create('feedings', function (Blueprint $table) {
             $table->id();
-            $table->enum('category', ["breast","bottle"]);
-            $table->enum('unit', ["ml","oz","min"])->default('min');
+            $table->enum('category', ['breast', 'bottle']);
+            $table->enum('unit', ['ml', 'oz', 'min'])->default('min');
             $table->integer('amount');
-            $table->enum('side', ["left","right","both"])->nullable();
+            $table->enum('side', ['left', 'right', 'both'])->nullable();
             $table->dateTime('date_time');
             $table->foreignId('baby_id');
             $table->timestamps();

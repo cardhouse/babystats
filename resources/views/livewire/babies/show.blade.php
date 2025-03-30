@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Baby;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Reactive;
 use Livewire\Volt\Component;
 
@@ -9,8 +10,15 @@ new class extends Component {
 
     public ?string $filterDate = null;
 
-    // Listen for the updated event to refresh the component
-    protected $listeners = ['updated' => '$refresh'];
+    public function getHistoryProperty(): Collection
+    {
+        return $this->baby->getHistoryForDate($this->filterDate);
+    }
+
+    public function mount(Baby $baby)
+    {
+        $this->baby = $baby;
+    }
 }; ?>
 
 <div class="container mx-auto">
@@ -31,29 +39,27 @@ new class extends Component {
         <div class="w-full md:w-1/2">
             <flux:card>
                 @php
-                    $history = collect($this->baby->getHistoryForDate($this->filterDate));
-                    $peeCount = $history->whereIn('category', ['wet', 'full'])->count();
-                    $poopCount = $history->whereIn('category', ['dirty', 'full'])->count();
+                    $peeCount = $this->history->whereIn('category', ['wet', 'full'])->count();
+                    $poopCount = $this->history->whereIn('category', ['dirty', 'full'])->count();
                 @endphp
-                <div>Pee Count: {{ $peeCount }}</div>
-                <div>Poop Count: {{ $poopCount }}</div>
+                <div>{{ $peeCount }} {{ Str::of('wet diaper')->plural($peeCount) }}</div>
+                <div>{{ $poopCount }} {{ Str::of('dirty diaper')->plural($poopCount) }}</div>
             </flux:card>
         </div>
         <div class="w-full md:w-1/2">
             <flux:card>
                 @php
-                    $feedings = collect($this->baby->getHistoryForDate($this->filterDate));
                     // Group bottle feedings by their unit (oz or ml) and sum amounts
-                    $bottleFeedings = $feedings->where('category', 'bottle');
+                    $bottleFeedings = $this->history->where('category', 'bottle');
                     $bottleConsumptions = $bottleFeedings->groupBy('unit')->map(function($group) {
                         return $group->sum('amount');
                     })->all();
-                    $breastfeedingTime = $feedings->where('category', 'breast')->sum('amount');
+                    $breastfeedingTime = $this->history->where('category', 'breast')->sum('amount');
                 @endphp
                 @foreach($bottleConsumptions as $unit => $total)
-                    <div>Total Bottle Consumption ({{ $unit }}): {{ $total }}</div>
+                    <div>Bottles: {{ $total }}{{ $unit }}</div>
                 @endforeach
-                <div>Total Breastfeeding Time: {{ $breastfeedingTime }} minutes</div>
+                <div>Breast: {{ $breastfeedingTime }} minutes</div>
             </flux:card>
         </div>
     </div>
@@ -78,7 +84,6 @@ new class extends Component {
         </flux:tab.group>
     </flux:modal>
 
-    <x-babies.history :history="$this->baby->getHistoryForDate($this->filterDate)" :date="$this->filterDate" />
-
+    <x-babies.history :history="$this->history" :date="$this->filterDate" />
 
 </div>

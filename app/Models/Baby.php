@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class Baby extends Model
@@ -63,15 +63,18 @@ class Baby extends Model
     public function getHistoryAttribute(): Collection
     {
         return $this->feedings->map(function ($item) {
-                $item->type = 'feeding';
-                return $item;
-            })
+            $item->type = 'feeding';
+
+            return $item;
+        })
             ->concat($this->diapers->map(function ($item) {
                 $item->type = 'diaper';
+
                 return $item;
             }))
             ->concat($this->sleeps->map(function ($item) {
                 $item->type = 'sleep';
+
                 return $item;
             }))
             ->sortByDesc('date_time');
@@ -79,10 +82,10 @@ class Baby extends Model
 
     public function getHistoryForDate(?string $date = null, ?string $timezone = 'America/New_York'): Collection
     {
-        if (!$date) {
+        if (! $date) {
             $date = now()->setTimezone($timezone)->format('Y-m-d');
         }
-        
+
         $startOfDay = \Carbon\Carbon::createFromFormat('Y-m-d', $date, $timezone)
             ->startOfDay()
             ->utc();

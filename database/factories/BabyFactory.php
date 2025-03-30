@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Baby;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BabyFactory extends Factory
 {
@@ -23,7 +22,7 @@ class BabyFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'sex' => fake()->randomElement(["m","f"]),
+            'sex' => fake()->randomElement(['m', 'f']),
             'birth_date' => fake()->dateTime(),
             'user_id' => User::factory(),
         ];
