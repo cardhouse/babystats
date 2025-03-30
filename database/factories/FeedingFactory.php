@@ -21,9 +21,9 @@ class FeedingFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(['breast', 'bottle']),
-            'measurement' => fake()->randomElement(['ml', 'oz', 'min']),
-            'size' => fake()->word(),
+            'category' => fake()->randomElement(['breast', 'bottle']),
+            'amount' => fake()->numberBetween(30, 180),
+            'unit' => fake()->randomElement(['ml', 'oz', 'min']),
             'side' => fake()->randomElement(['left', 'right', 'both']),
             'date_time' => fake()->dateTime(),
             'baby_id' => Baby::factory(),

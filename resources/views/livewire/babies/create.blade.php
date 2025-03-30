@@ -1,16 +1,23 @@
 <?php
 
+use App\Models\Baby;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
     public $newName;
-
     public $newSex;
-
     public $newBirthDate;
+
+    public function mount()
+    {
+        $this->authorize('create', Baby::class);
+    }
 
     public function createBaby()
     {
+        $this->authorize('create', Baby::class);
+        
         $this->validate([
             'newName' => 'required|string|max:255',
             'newBirthDate' => 'required|date',

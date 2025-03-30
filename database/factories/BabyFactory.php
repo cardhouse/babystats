@@ -22,7 +22,6 @@ class BabyFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'sex' => fake()->randomElement(['m', 'f']),
             'birth_date' => fake()->dateTime(),
             'user_id' => User::factory(),
         ];

@@ -94,15 +94,15 @@ class Baby extends Model
             ->utc();
 
         $feedingsQuery = $this->feedings()
-            ->selectRaw("id, category, amount, unit, side, date_time, 'feeding' as type")
+            ->selectRaw("id, baby_id, category, amount, unit, side, date_time, 'feeding' as type")
             ->whereBetween('date_time', [$startOfDay, $endOfDay]);
 
         $diapersQuery = $this->diapers()
-            ->selectRaw("id, category, NULL as amount, NULL as unit, NULL as side, date_time, 'diaper' as type")
+            ->selectRaw("id, baby_id, category, NULL as amount, NULL as unit, NULL as side, date_time, 'diaper' as type")
             ->whereBetween('date_time', [$startOfDay, $endOfDay]);
 
         $sleepsQuery = $this->sleeps()
-            ->selectRaw("id, NULL as category, NULL as amount, NULL as unit, NULL as side, date_time, 'sleep' as type")
+            ->selectRaw("id, baby_id, NULL as category, NULL as amount, NULL as unit, NULL as side, date_time, 'sleep' as type")
             ->whereBetween('date_time', [$startOfDay, $endOfDay]);
 
         $unionQuery = $feedingsQuery->unionAll($diapersQuery)->unionAll($sleepsQuery);

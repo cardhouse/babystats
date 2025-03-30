@@ -21,7 +21,7 @@ class DiaperFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(['wet', 'dirty', 'full']),
+            'category' => fake()->randomElement(['wet', 'dirty', 'full']),
             'date_time' => fake()->dateTime(),
             'baby_id' => Baby::factory(),
         ];

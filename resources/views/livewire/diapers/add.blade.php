@@ -2,6 +2,7 @@
 
 use App\Models\Baby;
 use Livewire\Volt\Component;
+use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
     public Baby $baby;
@@ -10,11 +11,14 @@ new class extends Component {
 
     public function mount(Baby $baby)
     {
+        $this->authorize('update', $baby);
         $this->baby = $baby;
     }
 
     public function addDiaper()
     {
+        $this->authorize('update', $this->baby);
+        
         $this->validate([
             'newDiaperCategory' => 'required|in:wet,dirty,full',
         ]);

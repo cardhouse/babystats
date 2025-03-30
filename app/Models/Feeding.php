@@ -16,7 +16,7 @@ class Feeding extends Model
      * @var array
      */
     protected $fillable = [
-        'type',
+        'category',
         'amount',
         'unit',
         'side',
