@@ -137,7 +137,7 @@ test('baby history shows correct items for selected date', function () {
     // Test today's view
     $component = Livewire::actingAs($user)
         ->test('babies.show', ['baby' => $baby])
-        ->set('filterDate', $todayDate);
+        ->set('selectedDate', $todayDate);
 
     // Should see today's items
     $component->assertSeeText([$todayFeeding->category, $todayDiaper->category]);
@@ -146,7 +146,7 @@ test('baby history shows correct items for selected date', function () {
     $component->assertDontSeeText([$yesterdayFeeding->category, $yesterdayDiaper->category]);
 
     // Test yesterday's view
-    $component->set('filterDate', $yesterdayDate);
+    $component->set('selectedDate', $yesterdayDate);
 
     // Should see yesterday's items
     $component->assertSeeText([$yesterdayFeeding->category, $yesterdayDiaper->category]);
