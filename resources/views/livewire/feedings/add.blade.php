@@ -56,7 +56,7 @@ new class extends Component {
     
 }; ?>
 
-<flux:container class="flex flex-col md:w-sm justify-center items-center h-full space-y-4 text-center">
+<flux:container class="flex flex-col md:w-sm justify-center items-center min-h-[300px] h-full space-y-4 text-center">
     <flux:heading size="xl" class="text-blue-500">🍼 Feeding</flux:heading>
     <flux:subheading>Cheers!</flux:subheading>
 
