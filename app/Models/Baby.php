@@ -35,6 +35,23 @@ class Baby extends Model
         'user_id' => 'integer',
     ];
 
+    // Create a dynamic property for the age of the baby
+    public function getAgeAttribute()
+    {
+        $diff = $this->birth_date->diff(now());
+
+        $format = [];
+        if ($diff->y > 0) {
+            $format[] = '%y years';
+        }
+        if ($diff->m > 0) {
+            $format[] = '%m months';
+        }
+        $format[] = '%d days old';
+
+        return $diff->format(implode(', ', $format));
+    }
+
     public function diapers(): HasMany
     {
         return $this->hasMany(Diaper::class);

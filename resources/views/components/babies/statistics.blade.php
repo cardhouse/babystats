@@ -1,44 +1,32 @@
 @props(['history'])
 
-<div class="grid grid-cols-1 gap-4">
-    <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg p-4">
-        <h3 class="text-base font-semibold text-pink-600 mb-3">Diaper Stats</h3>
-        @php
-            $peeCount = $history->whereIn('category', ['wet', 'full'])->count();
-            $poopCount = $history->whereIn('category', ['dirty', 'full'])->count();
-        @endphp
-        <div class="grid grid-cols-2 gap-3">
-            <div class="bg-white/50 rounded-lg p-3">
-                <span class="text-sm text-gray-600">Wet Diapers</span>
-                <div class="text-2xl font-bold text-pink-500 mt-1">{{ $peeCount }}</div>
-            </div>
-            <div class="bg-white/50 rounded-lg p-3">
-                <span class="text-sm text-gray-600">Dirty Diapers</span>
-                <div class="text-2xl font-bold text-pink-500 mt-1">{{ $poopCount }}</div>
-            </div>
-        </div>
-    </div>
+@php
+    $peeCount = $history->whereIn('category', ['wet', 'full'])->count();
+    $poopCount = $history->whereIn('category', ['dirty', 'full'])->count();
+    $breastfeedingTime = $history->where('category', 'breast')->sum('amount');
+    $bottleFeedings = $history->where('category', 'bottle');
+    $bottleConsumptions = $bottleFeedings->groupBy('unit')->map(function($group) {
+        return $group->sum('amount');
+    })->filter()->all();
+@endphp
 
-    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
-        <h3 class="text-base font-semibold text-blue-600 mb-3">Feeding Stats</h3>
-        @php
-            $bottleFeedings = $history->where('category', 'bottle');
-            $bottleConsumptions = $bottleFeedings->groupBy('unit')->map(function($group) {
-                return $group->sum('amount');
-            })->all();
-            $breastfeedingTime = $history->where('category', 'breast')->sum('amount');
-        @endphp
-        <div class="grid gap-3">
-            @foreach($bottleConsumptions as $unit => $total)
-                <div class="bg-white/50 rounded-lg p-3">
-                    <span class="text-sm text-gray-600">Bottles ({{ $unit }})</span>
-                    <div class="text-2xl font-bold text-blue-500 mt-1">{{ $total }}</div>
-                </div>
-            @endforeach
-            <div class="bg-white/50 rounded-lg p-3">
-                <span class="text-sm text-gray-600">Breastfeeding</span>
-                <div class="text-2xl font-bold text-blue-500 mt-1">{{ $breastfeedingTime }} min</div>
-            </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y divide-gray-200 sm:divide-y-0 bg-gray-50">
+    <div class="px-6 py-5 text-center sm:border-r border-gray-200">
+        <span class="block text-gray-900 text-lg font-semibold">{{ $peeCount }}</span>
+        <span class="block text-gray-600 text-sm">{{ Str::of('wet diaper')->plural($peeCount) }}</span>
+    </div>
+    <div class="px-6 py-5 text-center sm:border-r border-gray-200">
+        <span class="block text-gray-900 text-lg font-semibold">{{ $poopCount }}</span>
+        <span class="block text-gray-600 text-sm">{{ Str::of('dirty diaper')->plural($poopCount) }}</span>
+    </div>
+    @foreach($bottleConsumptions as $unit => $total)
+        <div class="px-6 py-5 text-center sm:border-r border-gray-200">
+            <span class="block text-gray-900 text-lg font-semibold">{{ $total }}{{ $unit }}</span>
+            <span class="block text-gray-600 text-sm">Bottle</span>
         </div>
+    @endforeach
+    <div class="px-6 py-5 text-center">
+        <span class="block text-gray-900 text-lg font-semibold">{{ $breastfeedingTime }} {{ Str::of('minute')->plural($breastfeedingTime) }}</span>
+        <span class="block text-gray-600 text-sm">Breastfeeding</span>
     </div>
 </div>
