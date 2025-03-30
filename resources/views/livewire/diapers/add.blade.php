@@ -34,16 +34,16 @@ new class extends Component {
     }
 }; ?>
 
-<div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl flex flex-col justify-between h-full">
+<flux:container class="flex flex-col md:w-sm justify-center items-center h-full space-y-4 text-center">
     <flux:heading size="xl" class="text-yellow-500">💩 Diapers</flux:heading>
-    <flux:subheading>Everybody poops.</flux:subheading>
+    <flux:subheading class="text-gray-600 dark:text-gray-300">Everybody poops.</flux:subheading>
 
-    <form wire:submit.prevent="addDiaper">
-        <flux:select wire:model="newDiaperCategory" variant="listbox" placeholder="How bad was it?" class="mt-2">
+    <form wire:submit.prevent="addDiaper" class="space-y-4 w-full">
+        <flux:select wire:model="newDiaperCategory" variant="listbox" placeholder="How bad was it?" class="w-full">
             <flux:select.option value="wet">Wet</flux:select.option>
             <flux:select.option value="dirty">Dirty</flux:select.option>
             <flux:select.option value="full">Both</flux:select.option>
         </flux:select>
-        <flux:button type="submit" variant="primary" class="mt-4">Log Diaper</flux:button>
+        <flux:button type="submit" variant="primary" class="w-full">Log Diaper</flux:button>
     </form>
-</div>
+</flux:container>

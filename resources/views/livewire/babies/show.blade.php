@@ -23,67 +23,32 @@ new class extends Component {
 
 <div class="container mx-auto">
     <flux:header container>
-        <flux:heading size="xl">{{ $this->baby->name  }}</flux:heading>
+        <flux:heading size="xl">{{ $this->baby->name }}</flux:heading>
         <flux:spacer />
-        <flux:date-picker
-            wire:model.live="filterDate"
-            with-today
-            placeholder=""
-            class="mr-2" />
-        <flux:modal.trigger name="edit-profile">
-            <flux:button icon="plus">Add</flux:button>
-        </flux:modal.trigger>
+        <flux:date-picker wire:model.live="filterDate" with-today placeholder="" class="mr-2" />
+        <flux:dropdown>
+            <flux:button icon:trailing="plus">Add</flux:button>
+            <flux:menu>
+                <flux:modal.trigger name="new-diaper" class="w-full">
+                    <flux:menu.item>New Diaper</flux:menu.item>
+                </flux:modal.trigger>
+                <flux:modal.trigger name="new-feeding" class="w-full">
+                    <flux:menu.item>New Feeding</flux:menu.item>
+                </flux:modal.trigger>
+            </flux:menu>
+        </flux:dropdown>
+        
     </flux:header>
 
-    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-        <div class="w-full md:w-1/2">
-            <flux:card>
-                @php
-                    $peeCount = $this->history->whereIn('category', ['wet', 'full'])->count();
-                    $poopCount = $this->history->whereIn('category', ['dirty', 'full'])->count();
-                @endphp
-                <div>{{ $peeCount }} {{ Str::of('wet diaper')->plural($peeCount) }}</div>
-                <div>{{ $poopCount }} {{ Str::of('dirty diaper')->plural($poopCount) }}</div>
-            </flux:card>
-        </div>
-        <div class="w-full md:w-1/2">
-            <flux:card>
-                @php
-                    // Group bottle feedings by their unit (oz or ml) and sum amounts
-                    $bottleFeedings = $this->history->where('category', 'bottle');
-                    $bottleConsumptions = $bottleFeedings->groupBy('unit')->map(function($group) {
-                        return $group->sum('amount');
-                    })->all();
-                    $breastfeedingTime = $this->history->where('category', 'breast')->sum('amount');
-                @endphp
-                @foreach($bottleConsumptions as $unit => $total)
-                    <div>Bottles: {{ $total }}{{ $unit }}</div>
-                @endforeach
-                <div>Breast: {{ $breastfeedingTime }} minutes</div>
-            </flux:card>
-        </div>
-    </div>
-
-    <flux:modal name="edit-profile">
-        <flux:tab.group class="max-w-md mx-auto">
-
-            <div class="flex justify-center">
-                <flux:tabs wire:model="tab" variant="segmented">
-                    <flux:tab name="feedings" class="text-center">Feedings</flux:tab>
-                    <flux:tab name="diapers" class="text-center">Diapers</flux:tab>
-                </flux:tabs>
-            </div>
-
-            <flux:tab.panel name="feedings">
-                <livewire:feedings.add :baby="$this->baby" @updated="$refresh" />
-            </flux:tab.panel>
-
-            <flux:tab.panel name="diapers">
-                <livewire:diapers.add :baby="$this->baby" @updated="$refresh" />
-            </flux:tab.panel>
-        </flux:tab.group>
+    <flux:modal name="new-diaper" title="New Diaper" size="lg">
+        <livewire:diapers.add :baby="$this->baby" @updated="$refresh" />
     </flux:modal>
 
+    <flux:modal name="new-feeding" title="New Feeding" size="lg">
+        <livewire:feedings.add :baby="$this->baby" @updated="$refresh" />
+    </flux:modal>
+            
+    <x-babies.statistics :history="$this->history" />
     <x-babies.history :history="$this->history" :date="$this->filterDate" />
 
 </div>
